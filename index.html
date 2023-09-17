@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v1a</title> 
+    <title>Music Wiki v1b</title> 
 </head>
 <body>
-    <h1>Music Wiki v1a</h1> 
+    <h1>Music Wiki v1b</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -52,7 +52,7 @@
         function updateAlbums(library, song) {
             if(library.filter(album => album.name === song.album).length === 0) {
                 console.log(`adding ${song.album}`, library);
-                library.push(new album(song));
+                library.push(new Album(song));
             } else {
                 console.log(`album already exists`);
             }
