@@ -61,7 +61,19 @@
                         const row = document.createElement('tr');
                         rowData.forEach(cellData => {
                             const cell = document.createElement('td');
-                            cell.textContent = cellData;
+                            if (cellData.includes(',')) {
+                                // If cell contains a comma, split it and display as separate items
+                                const items = cellData.split(',');
+                                const itemList = document.createElement('ul');
+                                items.forEach(item => {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = item.trim();
+                                    itemList.appendChild(listItem);
+                                });
+                                cell.appendChild(itemList);
+                            } else {
+                                cell.textContent = cellData;
+                            }
                             row.appendChild(cell);
                         });
                         table.appendChild(row);
