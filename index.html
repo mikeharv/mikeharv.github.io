@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script>
+        function init() {
+            console.log('init');
+            Tabletop.init({
+                key: '1aw-lG77MkUB9volokjRMLgDNwyL_BWB3nHVhp3c1bGQ',
+                callback: function (data, tabletop) {
+                    console.log(data);
+                },
+                simpleSheet: true
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>8:51</p>
+    <h1>Hello World</h1>
+    <p>8:54</p>
 </body>
 </html>
