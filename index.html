@@ -1,24 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script src="tabletop/src/tabletop.min.js"></script>
-    <script>
-        function init() {
-            console.log('init');
-            Tabletop.init({
-                key: '1aw-lG77MkUB9volokjRMLgDNwyL_BWB3nHVhp3c1bGQ',
-                callback: function (data, tabletop) {
-                    console.log(data);
-                },
-                simpleSheet: true
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Data</title>
 </head>
 <body>
-    <h1>Hello World</h1>
-    <p>8:57</p>
+    <h1>Google Sheet Data</h1>
+    <table id="data-table">
+        <!-- Data will be displayed here -->
+    </table>
+
+    <script>
+        // Fetch data from the published Google Sheet in CSV format
+        fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?output=csv')
+            .then(response => response.text())
+            .then(data => {
+                // Parse CSV data into an array of rows and columns
+                const rows = data.split('\n').map(row => row.split(','));
+                
+                // Create an HTML table and populate it with the data
+                const table = document.getElementById('data-table');
+                rows.forEach(row => {
+                    const newRow = table.insertRow();
+                    row.forEach(cell => {
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = cell;
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    </script>
 </body>
 </html>
