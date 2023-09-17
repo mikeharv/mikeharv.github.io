@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v1b</title> 
+    <title>Music Wiki v1c</title> 
 </head>
 <body>
-    <h1>Music Wiki v1b</h1> 
+    <h1>Music Wiki v1c</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -30,10 +30,10 @@
         // Define the Album class
         class Album {
             constructor(song) {
-                this.band = data["Band"];
-                this.name = song["Album"];
-                this.year = data["Year"];
-                this.trackList = [data["Song Title"]];
+                this.band = song.band;
+                this.name = song.name;
+                this.year = song.year;
+                this.trackList = [song.songTitle];
             }
         }
 
