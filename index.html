@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v0c</title> 
+    <title>Music Wiki v0e</title> 
 </head>
 <body>
-    <h1>Music Wiki v0c</h1> 
+    <h1>Music Wiki v0e</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -40,26 +40,39 @@
                     const table = document.getElementById(tableId);
 
                     // Create the table headers
-                    const headerRow = rows[0];
-                    const headerCells = headerRow.map(header => {
-                        return header.trim(); // Remove leading/trailing spaces
+                    const headerRow = document.createElement('tr');
+                    rows[0].forEach(header => {
+                        const th = document.createElement('th');
+                        th.textContent = header;
+                        headerRow.appendChild(th);
                     });
+                    table.appendChild(headerRow);
 
                     // Populate the table with data and add Song instances to songLibrary
                     for (let i = 1; i < rows.length; i++) {
                         const rowData = rows[i];
                         const songData = {};
                         rowData.forEach((cellData, index) => {
-                            const header = headerCells[index];
+                            const header = rows[0][index].trim(); // Use the trimmed header as the property name
                             songData[header] = cellData;
                         });
 
                         // Create a Song instance and add it to songLibrary
                         const song = new Song(songData);
                         songLibrary.push(song);
+
+                        // Create a table row and populate it with data
+                        const row = document.createElement('tr');
+                        rowData.forEach(cellData => {
+                            const cell = document.createElement('td');
+                            cell.textContent = cellData;
+                            row.appendChild(cell);
+                        });
+                        table.appendChild(row);
                     }
 
-                    // ... Rest of your table rendering code ...
+                    // Log songLibrary for inspection
+                    console.log(songLibrary);
                 })
                 .catch(error => {
                     console.error(`Error fetching data: ${error}`);
