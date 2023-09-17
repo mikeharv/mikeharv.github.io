@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v7</title> <!-- Updated version number to v7 -->
+    <title>Music Wiki v8</title> <!-- Updated version number to v7 -->
 </head>
 <body>
-    <h1>Music Wiki v7</h1> <!-- Updated version number to v7 -->
+    <h1>Music Wiki v8</h1> <!-- Updated version number to v7 -->
 
     <!-- Create tables to display data -->
     <section id="bands">
@@ -60,11 +60,11 @@
                         const rowData = rows[i];
                         const row = document.createElement('tr');
                         rowData.forEach((cellData, index) => {
-                        	console.log(rowData);
                             const cell = document.createElement('td');
                             if ((headerRow.textContent.includes('Track List') && index === headerRow.textContent.indexOf('Track List')) ||
                                 (headerRow.textContent.includes('Instruments') && index === headerRow.textContent.indexOf('Instruments')) ||
                                 (headerRow.textContent.includes('Musician(s)') && index === headerRow.textContent.indexOf('Musician(s)'))) {
+                            	console.log(cellData);
                                 // Handle columns with multiple values
                                 const values = cellData.split('"').filter(item => item.trim() !== ',' && item.trim() !== '');
                                 const ul = document.createElement('ul');
