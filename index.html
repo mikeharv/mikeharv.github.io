@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v10</title> <!-- Updated version number to v1 -->
+    <title>Music Wiki v10</title> <!-- Updated version number to v10 -->
 </head>
 <body>
-    <h1>Music Wiki v10</h1> <!-- Updated version number to v9 -->
+    <h1>Music Wiki v10</h1> <!-- Updated version number to v10 -->
 
     <!-- Create tables to display data -->
     <section id="bands">
@@ -43,7 +43,7 @@
             fetch(sheetURL)
                 .then(response => response.text())
                 .then(data => {
-                    const rows = data.split('\n').map(row => row.split(','));
+                    const rows = data.split('\n').map(row => row.split('\t')); // Use '\t' as the delimiter for TSV
                     const table = document.getElementById(tableId);
                     
                     // Create the table headers
@@ -61,20 +61,15 @@
                         const row = document.createElement('tr');
                         rowData.forEach(cellData => {
                             const cell = document.createElement('td');
-                            // Check if the cell data contains double-quotes and handle commas
-                            // if (cellData.includes('"')) {
-                            //     const values = cellData.split('"').filter(item => item.trim() !== ',' && item.trim() !== '');
-                            //     const ul = document.createElement('ul');
-                            //     values.forEach(value => {
-                            //         const li = document.createElement('li');
-                            //         li.textContent = value.trim();
-                            //         ul.appendChild(li);
-                            //     });
-                            //     cell.appendChild(ul);
-                            // } else {
-                                // Display other cells as is
-                                cell.textContent = cellData;
-                            // }
+                            // Handle columns with multiple values
+                            const values = cellData.split(',').map(value => value.trim());
+                            const ul = document.createElement('ul');
+                            values.forEach(value => {
+                                const li = document.createElement('li');
+                                li.textContent = value;
+                                ul.appendChild(li);
+                            });
+                            cell.appendChild(ul);
                             row.appendChild(cell);
                         });
                         table.appendChild(row);
@@ -86,10 +81,10 @@
         }
 
         // Fetch and display data for each sheet
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1612857784&single=true&output=csv', 'band-table');
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=275436655&single=true&output=csv', 'album-table');
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=648270528&single=true&output=csv', 'musician-table');
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=csv', 'song-table');
+        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1612857784&single=true&output=tsv', 'band-table');
+        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=275436655&single=true&output=tsv', 'album-table');
+        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=648270528&single=true&output=tsv', 'musician-table');
+        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv', 'song-table');
     </script>
 </body>
 </html>
