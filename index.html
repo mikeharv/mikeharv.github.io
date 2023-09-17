@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v1c</title> 
+    <title>Music Wiki v2</title> 
 </head>
 <body>
-    <h1>Music Wiki v1c</h1> 
+    <h1>Music Wiki v2</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -22,7 +22,7 @@
                 this.band = data["Band"];
                 this.album = data["Album"];
                 this.year = data["Year"];
-                this.songTitle = data["Song Title"];
+                this.title = data["Song Title"];
                 this.credits = parseCredits(data["Credits"]);
             }
         }
@@ -31,9 +31,9 @@
         class Album {
             constructor(song) {
                 this.band = song.band;
-                this.name = song.name;
+                this.name = song.album;
                 this.year = song.year;
-                this.trackList = [song.songTitle];
+                this.trackList = [song.title];
             }
         }
 
@@ -50,11 +50,13 @@
         }
 
         function updateAlbums(library, song) {
-            if(library.filter(album => album.name === song.album).length === 0) {
+            const existingAlbum = library.find(album => album.name === song.album);
+            if(!existingAlbum) {
                 console.log(`adding ${song.album}`, library);
                 library.push(new Album(song));
             } else {
                 console.log(`album already exists`);
+                existingAlbum.trackList.push(song.title);
             }
         }
         const songLibrary = [];
