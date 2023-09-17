@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v0g</title> 
+    <title>Music Wiki v0h</title> 
 </head>
 <body>
-    <h1>Music Wiki v0g</h1> 
+    <h1>Music Wiki v0h</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -23,9 +23,7 @@
                 this.album = data["Album"];
                 this.year = data["Year"];
                 this.songTitle = data["Song Title"];
-                this.lyrics = data["Lyrics"];
-                this.music = data["Music"];
-                this.performers = parsePerformers(data["Performers"]);
+                this.performers = parsePerformers(data["Credits"]);
             }
         }
 
