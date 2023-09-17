@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v0h</title> 
+    <title>Music Wiki v1</title> 
 </head>
 <body>
-    <h1>Music Wiki v0h</h1> 
+    <h1>Music Wiki v1</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -23,12 +23,22 @@
                 this.album = data["Album"];
                 this.year = data["Year"];
                 this.songTitle = data["Song Title"];
-                this.performers = parsePerformers(data["Credits"]);
+                this.credits = parseCredits(data["Credits"]);
+            }
+        }
+
+        // Define the Album class
+        class Album {
+            constructor(song) {
+                this.band = data["Band"];
+                this.name = song["Album"];
+                this.year = data["Year"];
+                this.trackList = [data["Song Title"]];
             }
         }
 
         // Function to parse performers data and create a performers object
-        function parsePerformers(performersData) {
+        function parseCredits(performersData) {
             const performersObject = {};
             const performersArray = performersData.split(';');
             performersArray.forEach(performer => {
@@ -39,7 +49,16 @@
             return performersObject;
         }
 
+        function updateAlbums(library, song) {
+            if(library.filter(album => album.name === song.album).length === 0) {
+                console.log(`adding ${song.album}`, library);
+                library.push(new album(song));
+            } else {
+                console.log(`album already exists`);
+            }
+        }
         const songLibrary = [];
+        const albumLibrary = [];
 
         // Function to fetch and display data for a specific sheet
         function fetchData(sheetURL, tableId) {
@@ -70,6 +89,8 @@
                         // Create a Song instance and add it to songLibrary
                         const song = new Song(songData);
                         songLibrary.push(song);
+                        updateAlbums(albumLibrary, song);
+                        // updateArtists(song);
 
                         // Create a table row and populate it with data
                         const row = document.createElement('tr');
@@ -84,9 +105,9 @@
                     // Log songLibrary for inspection
                     console.log(songLibrary);
                 })
-                // .catch(error => {
-                //     console.error(`Error fetching data: ${error}`);
-                // });
+                .catch(error => {
+                    console.error(`Error fetching data: ${error}`);
+                });
         }
 
         // Fetch and display data for each sheet
