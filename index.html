@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v5</title>
+    <title>Music Wiki v6</title> <!-- Updated version number to v6 -->
 </head>
 <body>
-    <h1>Music Wiki v5</h1>
+    <h1>Music Wiki v6</h1> <!-- Updated version number to v6 -->
 
     <!-- Create tables to display data -->
     <section id="bands">
@@ -61,21 +61,7 @@
                         const row = document.createElement('tr');
                         rowData.forEach(cellData => {
                             const cell = document.createElement('td');
-                            if (cellData.includes(',')) {
-                            	console.log('splitting', cellData);
-                                // If cell contains a comma, split it and display as separate items
-                                const items = cellData.split(',');
-                                const itemList = document.createElement('ul');
-                                items.forEach(item => {
-                                    const listItem = document.createElement('li');
-                                    listItem.textContent = item.trim();
-                                    itemList.appendChild(listItem);
-                                });
-                                cell.appendChild(itemList);
-                            } else {
-                            	console.log(cellData);
-                                cell.textContent = cellData;
-                            }
+                            cell.textContent = cellData;
                             row.appendChild(cell);
                         });
                         table.appendChild(row);
