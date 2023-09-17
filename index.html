@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v2</title> 
+    <title>Music Wiki v2a</title> 
 </head>
 <body>
-    <h1>Music Wiki v2</h1> 
+    <h1>Music Wiki v2a</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -34,6 +34,7 @@
                 this.name = song.album;
                 this.year = song.year;
                 this.trackList = [song.title];
+                this.performers = getPerformersFromCredits(song.credits);
             }
         }
 
@@ -57,8 +58,34 @@
             } else {
                 console.log(`album already exists`);
                 existingAlbum.trackList.push(song.title);
+                existingAlbum.performers = Array.from(
+                    new Set(existingAlbum.performers.concat(getPerformersFromCredits(song.credits)))
+                    );
             }
         }
+
+        function getPerformersFromCredits(credits) {
+            const uniqueStrings = new Set(); // Use a Set to store unique strings
+
+            // Iterate through the object's properties
+            for (const prop in credits) {
+                if (credits.hasOwnProperty(prop)) {
+                    const propValue = credits[prop];
+
+                    // Check if the property value is an array
+                    if (Array.isArray(propValue)) {
+                        // Iterate through the array and add unique strings to the Set
+                        for (const item of propValue) {
+                            uniqueStrings.add(item);
+                        }
+                    }
+                }
+            }
+
+            // Convert the Set to an array and return it
+            return Array.from(uniqueStrings);
+        }
+
         const songLibrary = [];
         const albumLibrary = [];
 
