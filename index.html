@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v0e</title> 
+    <title>Music Wiki v0f</title> 
 </head>
 <body>
-    <h1>Music Wiki v0e</h1> 
+    <h1>Music Wiki v0f</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -25,8 +25,20 @@
                 this.songTitle = data["Song Title"];
                 this.lyrics = data["Lyrics"];
                 this.music = data["Music"];
-                this.performers = data["Performers"];
+                this.performers = parsePerformers(data["Performers"]);
             }
+        }
+
+        // Function to parse performers data and create a performers object
+        function parsePerformers(performersData) {
+            const performersObject = {};
+            const performersArray = performersData.split(';');
+            performersArray.forEach(performer => {
+                const [role, names] = performer.split(':').map(part => part.trim());
+                const performerNames = names.split('/').map(name => name.trim());
+                performersObject[role] = performerNames;
+            });
+            return performersObject;
         }
 
         const songLibrary = [];
