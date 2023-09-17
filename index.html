@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v16a</title> <!-- Updated version number to v16 -->
+    <title>Music Wiki v16</title> <!-- Updated version number to v16 -->
 </head>
 <body>
-    <h1>Music Wiki v16a</h1> <!-- Updated version number to v16 -->
+    <h1>Music Wiki v16</h1> <!-- Updated version number to v16 -->
 
     <!-- Create tables to display data -->
     <section id="bands">
@@ -87,7 +87,7 @@
 
         // Function to parse Songs data and populate musicianBands object
         function parseSongsData() {
-            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv')
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv') // Replace with the actual URL
                 .then(response => response.text())
                 .then(data => {
                     const rows = data.split('\n').map(row => row.split('\t'));
@@ -122,11 +122,11 @@
 
             // Iterate through musician rows and update associated bands
             musicianRows.forEach(row => {
-                const musicianName = row.querySelector('td:first-child').textContent; // Assuming musician names are in the first column
-                if (musicianBands[musicianName]) {
-                    const bandsCell = row.querySelector('td:nth-child(2)'); // Assuming bands are displayed in the second column
-                    bandsCell.textContent = musicianBands[musicianName].join(', ');
-                }
+                const musicianNameCell = row.querySelector('td:first-child'); // Assuming musician names are in the first column
+                const musicianName = musicianNameCell.textContent;
+                const bandsCell = document.createElement('td'); // Create a new cell for bands
+                bandsCell.textContent = musicianBands[musicianName] ? musicianBands[musicianName].join(', ') : ''; // Display associated bands or an empty string
+                row.appendChild(bandsCell); // Add the new cell to the row
             });
         }
 
