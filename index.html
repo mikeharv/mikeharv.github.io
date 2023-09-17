@@ -60,6 +60,7 @@
                         const rowData = rows[i];
                         const row = document.createElement('tr');
                         rowData.forEach((cellData, index) => {
+                        	console.log(rowData);
                             const cell = document.createElement('td');
                             if ((headerRow.textContent.includes('Track List') && index === headerRow.textContent.indexOf('Track List')) ||
                                 (headerRow.textContent.includes('Instruments') && index === headerRow.textContent.indexOf('Instruments')) ||
