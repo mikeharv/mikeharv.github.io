@@ -3,32 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v17a</title> <!-- Updated version number to v17 -->
+    <title>Music Wiki v0</title> 
 </head>
 <body>
-    <h1>Music Wiki v17a</h1> <!-- Updated version number to v17 -->
-
-    <!-- Create tables to display data -->
-    <section id="bands">
-        <h2>Bands</h2>
-        <table id="band-table">
-            <!-- Band data will be displayed here -->
-        </table>
-    </section>
-
-    <section id="albums">
-        <h2>Albums</h2>
-        <table id="album-table">
-            <!-- Album data will be displayed here -->
-        </table>
-    </section>
-
-    <section id="musicians">
-        <h2>Musicians</h2>
-        <table id="musician-table">
-            <!-- Musician data will be displayed here -->
-        </table>
-    </section>
+    <h1>Music Wiki v0</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -72,6 +50,16 @@
                                     ul.appendChild(li);
                                 });
                                 cell.appendChild(ul);
+                            } else if (cellData.includes(';')) {
+                                const values = cellData.split(';').map(value => value.trim());
+                                const ul = document.createElement('ul');
+                                values.forEach(value => {
+                                    console.log(value);
+                                    const li = document.createElement('li');
+                                    li.textContent = value;
+                                    ul.appendChild(li);
+                                });
+                                cell.appendChild(ul);
                             } else {
                                 // Display other cells as is
                                 cell.textContent = cellData;
@@ -86,59 +74,10 @@
                 });
         }
 
-        // Function to parse Songs data and populate musicianBands object
-        function parseSongsData() {
-            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv') // Replace with the actual URL
-                .then(response => response.text())
-                .then(data => {
-                    const rows = data.split('\n').map(row => row.split('\t'));
-                    const musicianBands = {}; // Create a new object to store associated bands
-
-                    for (let i = 1; i < rows.length; i++) {
-                        const songData = rows[i];
-                        const songMusicians = songData[3].split(',').map(musician => musician.trim()); // Assuming musician names are in the 4th column (index 3)
-
-                        // Update the musicianBands object
-                        songMusicians.forEach(musician => {
-                            if (!musicianBands[musician]) {
-                                musicianBands[musician] = [];
-                            }
-                            if (!musicianBands[musician].includes(songData[2])) { // Assuming band names are in the 3rd column (index 2)
-                                musicianBands[musician].push(songData[2]);
-                            }
-                        });
-                    }
-
-                    // Once data is parsed, update the Musicians table
-                    updateMusiciansTable(musicianBands);
-                })
-                .catch(error => {
-                    console.error(`Error fetching Songs data: ${error}`);
-                });
-        }
-
-        // Function to update the Musicians table with associated bands
-        function updateMusiciansTable(musicianBands) {
-            const musicianTable = document.getElementById('musician-table'); // Replace with your table ID
-            const musicianRows = musicianTable.querySelectorAll('tr');
-
-            // Iterate through musician rows and update associated bands
-            musicianRows.forEach(row => {
-                const musicianNameCell = row.querySelector('td:first-child'); // Assuming musician names are in the first column
-                const musicianName = musicianNameCell.textContent;
-                const bandsCell = document.createElement('td'); // Create a new cell for bands
-                bandsCell.textContent = musicianBands[musicianName] ? musicianBands[musicianName].join(', ') : ''; // Display associated bands or an empty string
-                row.appendChild(bandsCell); // Add the new cell to the row
-            });
-        }
-
         // Call the function to parse Songs data and update Musicians table
         parseSongsData();
 
         // Fetch and display data for each sheet
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1612857784&single=true&output=tsv', 'band-table');
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=275436655&single=true&output=tsv', 'album-table');
-        fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=648270528&single=true&output=tsv', 'musician-table');
         fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv', 'song-table');
     </script>
 </body>
