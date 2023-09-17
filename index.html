@@ -3,35 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheet Data</title>
+    <title>Music Wiki</title>
 </head>
 <body>
-    <h1>Google Sheet Data</h1>
-    <table id="data-table">
-        <!-- Data will be displayed here -->
-    </table>
+    <h1>Music Wiki</h1>
+
+    <!-- Create sections to display data -->
+    <section id="bands">
+        <h2>Bands</h2>
+        <ul id="band-list">
+            <!-- Band data will be displayed here -->
+        </ul>
+    </section>
+
+    <section id="albums">
+        <h2>Albums</h2>
+        <ul id="album-list">
+            <!-- Album data will be displayed here -->
+        </ul>
+    </section>
+
+    <section id="musicians">
+        <h2>Musicians</h2>
+        <ul id="musician-list">
+            <!-- Musician data will be displayed here -->
+        </ul>
+    </section>
+
+    <section id="songs">
+        <h2>Songs</h2>
+        <ul id="song-list">
+            <!-- Song data will be displayed here -->
+        </ul>
+    </section>
 
     <script>
-        // Fetch data from the published Google Sheet in CSV format
+        // Fetch data from the Google Sheet for Bands
         fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?output=csv')
             .then(response => response.text())
             .then(data => {
-                // Parse CSV data into an array of rows and columns
-                const rows = data.split('\n').map(row => row.split(','));
-                
-                // Create an HTML table and populate it with the data
-                const table = document.getElementById('data-table');
-                rows.forEach(row => {
-                    const newRow = table.insertRow();
-                    row.forEach(cell => {
-                        const newCell = newRow.insertCell();
-                        newCell.textContent = cell;
-                    });
+                const bands = data.split('\n').map(row => row.split(','));
+                // Process and display bands data
+                const bandList = document.getElementById('band-list');
+                bands.forEach(band => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Band Name: ${band[0]}, Formation Year: ${band[1]}, Genre: ${band[2]}`;
+                    bandList.appendChild(listItem);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
             });
+
+        // Repeat the same fetch process for Albums, Musicians, and Songs sheets
+        // Modify the code to parse and display data from each sheet accordingly
     </script>
 </body>
 </html>
