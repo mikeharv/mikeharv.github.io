@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v0</title> 
+    <title>Music Wiki v0a</title> 
 </head>
 <body>
-    <h1>Music Wiki v0</h1> 
+    <h1>Music Wiki v0a</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -73,9 +73,6 @@
                     console.error(`Error fetching data: ${error}`);
                 });
         }
-
-        // Call the function to parse Songs data and update Musicians table
-        parseSongsData();
 
         // Fetch and display data for each sheet
         fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv', 'song-table');
