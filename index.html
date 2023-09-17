@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v0a</title> 
+    <title>Music Wiki v0b</title> 
 </head>
 <body>
-    <h1>Music Wiki v0a</h1> 
+    <h1>Music Wiki v0b</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -16,6 +16,7 @@
     </section>
 
     <script>
+        const songLibrary = [];
         // Function to fetch and display data for a specific sheet
         function fetchData(sheetURL, tableId) {
             fetch(sheetURL)
@@ -72,10 +73,12 @@
                 .catch(error => {
                     console.error(`Error fetching data: ${error}`);
                 });
+                console.log(songLibrary);
         }
 
         // Fetch and display data for each sheet
         fetchData('https://docs.google.com/spreadsheets/d/e/2PACX-1vRoQplxGdN6jkWTPCmTecWOB5ldiViAYv8MhKYUYOnt5x2Cvn3J-OpS7dSr8aIcJo0euDy7Ai0DSPzm/pub?gid=1752800700&single=true&output=tsv', 'song-table');
+        console.log(songLibrary);
     </script>
 </body>
 </html>
