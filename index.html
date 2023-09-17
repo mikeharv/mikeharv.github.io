@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v10a</title> <!-- Updated version number to v10 -->
+    <title>Music Wiki v11</title> <!-- Updated version number to v11 -->
 </head>
 <body>
-    <h1>Music Wiki v10a</h1> <!-- Updated version number to v10 -->
+    <h1>Music Wiki v11</h1> <!-- Updated version number to v11 -->
 
     <!-- Create tables to display data -->
     <section id="bands">
@@ -59,17 +59,22 @@
                     for (let i = 1; i < rows.length; i++) {
                         const rowData = rows[i];
                         const row = document.createElement('tr');
-                        rowData.forEach(cellData => {
+                        rowData.forEach((cellData, index) => {
                             const cell = document.createElement('td');
                             // Handle columns with multiple values
-                            const values = cellData.split(',').map(value => value.trim());
-                            const ul = document.createElement('ul');
-                            values.forEach(value => {
-                                const li = document.createElement('li');
-                                li.textContent = value;
-                                ul.appendChild(li);
-                            });
-                            cell.appendChild(ul);
+                            if (headerRow.children[index].textContent.includes(',')) {
+                                const values = cellData.split(',').map(value => value.trim());
+                                const ul = document.createElement('ul');
+                                values.forEach(value => {
+                                    const li = document.createElement('li');
+                                    li.textContent = value;
+                                    ul.appendChild(li);
+                                });
+                                cell.appendChild(ul);
+                            } else {
+                                // Display other cells as is
+                                cell.textContent = cellData;
+                            }
                             row.appendChild(cell);
                         });
                         table.appendChild(row);
