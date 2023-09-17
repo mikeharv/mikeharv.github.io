@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki</title>
+    <title>Music Wiki v4</title>
 </head>
 <body>
     <h1>Music Wiki</h1>
@@ -62,6 +62,7 @@
                         rowData.forEach(cellData => {
                             const cell = document.createElement('td');
                             if (cellData.includes(',')) {
+                            	console.log('splitting', cellData);
                                 // If cell contains a comma, split it and display as separate items
                                 const items = cellData.split(',');
                                 const itemList = document.createElement('ul');
