@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v3</title> 
+    <title>Music Wiki v4</title> 
 </head>
 <body>
-    <h1>Music Wiki v3</h1> 
+    <h1>Music Wiki v4</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
@@ -60,10 +60,8 @@
         function updateAlbums(library, song) {
             const existingAlbum = library.find(album => album.name === song.album);
             if(!existingAlbum) {
-                console.log(`adding ${song.album}`, library);
                 library.push(new Album(song));
             } else {
-                console.log(`album already exists`);
                 existingAlbum.trackList.push(song.title);
                 existingAlbum.performers = Array.from(
                     new Set(existingAlbum.performers.concat(getPerformersFromCredits(song.credits)))
@@ -106,18 +104,34 @@
             });
             albumTable.appendChild(headerRow);
 
+
             // Populate the table with album data
             albumLibrary.forEach(album => {
                 const row = document.createElement('tr');
-                const rowData = [album.band, album.name, album.year, album.trackList.join(', '), album.performers.join(', ')];
+                const trackListCell = document.createElement('td'); // Create a separate cell for the tracklist
+
+                // Create an ordered list for the tracklist
+                const ol = document.createElement('ol');
+                album.trackList.forEach(track => {
+                    const li = document.createElement('li');
+                    li.textContent = track;
+                    ol.appendChild(li);
+                });
+
+                trackListCell.appendChild(ol); // Add the ordered list to the cell
+                const rowData = [album.band, album.name, album.year, trackListCell, album.performers.join(', ')];
                 rowData.forEach(cellData => {
                     const cell = document.createElement('td');
-                    cell.textContent = cellData;
+                    // Check if the cellData is a string or an element and append accordingly
+                    if (typeof cellData === 'string') {
+                        cell.textContent = cellData;
+                    } else {
+                        cell.appendChild(cellData);
+                    }
                     row.appendChild(cell);
                 });
                 albumTable.appendChild(row);
             });
-        }
 
         const songLibrary = [];
         const albumLibrary = [];
