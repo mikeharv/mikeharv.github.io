@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Wiki v2a</title> 
+    <title>Music Wiki v3</title> 
 </head>
 <body>
-    <h1>Music Wiki v2a</h1> 
+    <h1>Music Wiki v3</h1> 
 
     <section id="songs">
         <h2>Songs</h2>
         <table id="song-table">
             <!-- Song data will be displayed here -->
+        </table>
+    </section>
+
+    <section id="albums">
+        <h2>Albums</h2>
+        <table id="album-table">
+            <!-- Album data will be displayed here -->
         </table>
     </section>
 
@@ -86,6 +93,32 @@
             return Array.from(uniqueStrings);
         }
 
+        function populateAlbumTable() {
+            const albumTable = document.getElementById('album-table');
+
+            // Create the table headers
+            const headerRow = document.createElement('tr');
+            const headers = ["Band", "Name", "Year", "Track List", "Performers"];
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            albumTable.appendChild(headerRow);
+
+            // Populate the table with album data
+            albumLibrary.forEach(album => {
+                const row = document.createElement('tr');
+                const rowData = [album.band, album.name, album.year, album.trackList.join(', '), album.performers.join(', ')];
+                rowData.forEach(cellData => {
+                    const cell = document.createElement('td');
+                    cell.textContent = cellData;
+                    row.appendChild(cell);
+                });
+                albumTable.appendChild(row);
+            });
+        }
+
         const songLibrary = [];
         const albumLibrary = [];
 
@@ -130,6 +163,8 @@
                         });
                         table.appendChild(row);
                     }
+
+                    populateAlbumTable();
 
                     // Log songLibrary for inspection
                     console.log(songLibrary);
